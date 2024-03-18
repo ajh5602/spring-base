@@ -1,0 +1,46 @@
+spring:
+  application:
+    name: base
+  profiles:
+    active: dev
+
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+
+  sql:
+    init:
+      mode: always
+
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:~/test
+    username: base
+    password: base1234
+
+  jpa:
+    generate-ddl: true
+    open-in-view: false
+    show-sql: true
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        format_sql: true
+
+server:
+  port: 8080
+  undertow:
+    url-charset: UTF-8
+    decode-url: true
+
+springdoc:
+  packages-to-scan: com.papa.fms.domain
+  default-consumes-media-type: application/json;charset=UTF-8
+  default-produces-media-type: application/json;charset=UTF-8
+  swagger-ui:
+    path: /
+    disable-swagger-default-url: true
+    display-request-duration: true
+    operations-sorter: alpha
