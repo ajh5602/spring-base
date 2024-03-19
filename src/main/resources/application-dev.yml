@@ -36,7 +36,7 @@ server:
     decode-url: true
 
 springdoc:
-  packages-to-scan: com.papa.fms.domain
+  packages-to-scan: com.taylor.project.base
   default-consumes-media-type: application/json;charset=UTF-8
   default-produces-media-type: application/json;charset=UTF-8
   swagger-ui:
