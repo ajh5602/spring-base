@@ -1,4 +1,4 @@
-package com.taylor.project.base.common.config;
+package com.taylor.project.base.common.filter;
 
 import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;

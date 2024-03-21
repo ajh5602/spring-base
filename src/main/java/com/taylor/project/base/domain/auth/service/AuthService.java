@@ -1,4 +1,4 @@
-package com.taylor.project.base.domain.member.service;
+package com.taylor.project.base.domain.auth.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class MemberService {
+public class AuthService {
+
 
 }

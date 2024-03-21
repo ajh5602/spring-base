@@ -31,7 +31,9 @@ import org.hibernate.annotations.UpdateTimestamp;
 @DynamicUpdate
 @NoArgsConstructor
 @Table(name = "member", indexes = {
-    @Index(name = "idx__loginId__withdrawYn", columnList = "loginId, withdrawYn")})
+    @Index(name = "idx__loginId", columnList = "loginId"),
+    @Index(name = "idx__phone__email", columnList = "phone, email")
+})
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Member {
 
@@ -59,22 +61,27 @@ public class Member {
     Device device;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_tier", nullable = false)
-    MemberTier memberTier;
+    @JoinColumn(name = "member_group", nullable = false)
+    MemberGroup memberGroup;
 
-    @Column(name = "withdraw_datetime")
-    private LocalDateTime withdrawDateTime;
+    @Column(name = "dormant_yn")
+    @ColumnDefault("'0'")
+    Boolean dormantYn;
 
     @Column(name = "withdraw_yn")
-    private Boolean withdrawYn;
+    @ColumnDefault("'0'")
+    Boolean withdrawYn;
+
+    @Column(name = "withdraw_datetime")
+    LocalDateTime withdrawDateTime;
 
     @Column(name = "created_at", nullable = false)
     @CreationTimestamp
-    private LocalDateTime createdAt;
+    LocalDateTime createdAt;
 
     @Column(name = "updated_at")
     @UpdateTimestamp
-    private LocalDateTime updatedAt;
+    LocalDateTime updatedAt;
 
     @Builder
     public Member(
@@ -84,13 +91,13 @@ public class Member {
         String phone,
         String email,
         Device device,
-        MemberTier memberTier) {
+        MemberGroup memberGroup) {
         this.name = name;
         this.loginId = loginId;
         this.loginPassword = loginPassword;
         this.phone = phone;
         this.email = email;
         this.device = device;
-        this.memberTier = memberTier;
+        this.memberGroup = memberGroup;
     }
 }
