@@ -1,6 +1,5 @@
 package com.taylor.project.base.common.response;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -9,7 +8,6 @@ import org.springframework.data.domain.Page;
 
 @Getter
 @RequiredArgsConstructor
-@JsonInclude(JsonInclude.Include.NON_NULL)
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class ApiPage<V> {
 

@@ -26,16 +26,16 @@ public class ApiResponse<T> {
 
     public static <T> ResponseEntity<ApiResponse<T>> fail(ApiExceptionCode code) {
         return ResponseEntity.status(200)
-            .body(ApiResponse.<T>builder().result(true).message(code.getMessage()).build());
+            .body(ApiResponse.<T>builder().result(false).message(code.getMessage()).build());
     }
 
     public static <T> ResponseEntity<ApiResponse<T>> failMessage(String message) {
         return ResponseEntity.status(200)
-            .body(ApiResponse.<T>builder().result(true).message(message).build());
+            .body(ApiResponse.<T>builder().result(false).message(message).build());
     }
 
     public static <T> ResponseEntity<ApiResponse<T>> serverException(String message) {
         return ResponseEntity.status(500)
-            .body(ApiResponse.<T>builder().result(true).message(message).build());
+            .body(ApiResponse.<T>builder().result(false).message(message).build());
     }
 }
