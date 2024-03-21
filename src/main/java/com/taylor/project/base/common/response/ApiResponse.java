@@ -6,8 +6,10 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.experimental.FieldDefaults;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 
+@Slf4j
 @Getter
 @Builder
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -21,11 +23,9 @@ public class ApiResponse<T> {
     final T data;
 
     public static <T> ApiResponse<T> success(T data) {
-        return ApiResponse.<T>builder().result(true).data(data).build();
-    }
-
-    public static <T> ApiResponse<T> success(T data, String message) {
-        return ApiResponse.<T>builder().result(true).message(message).build();
+        ApiResponseBuilder<T> builder = ApiResponse.<T>builder().result(true);
+        return data instanceof String ? builder.message(data.toString()).build()
+            : builder.data(data).build();
     }
 
     public static <T> ResponseEntity<ApiResponse<T>> fail(ApiExceptionCode code) {
@@ -33,7 +33,7 @@ public class ApiResponse<T> {
             .body(ApiResponse.<T>builder().result(false).message(code.getMessage()).build());
     }
 
-    public static <T> ResponseEntity<ApiResponse<T>> failMessage(String message) {
+    public static <T> ResponseEntity<ApiResponse<T>> fail(String message) {
         return ResponseEntity.status(200)
             .body(ApiResponse.<T>builder().result(false).message(message).build());
     }

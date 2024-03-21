@@ -23,7 +23,7 @@ public class AuthController {
     @PostMapping("/join")
     public ApiResponse<String> join(@Valid @RequestBody JoinRequest request) {
         authService.join(request);
-        return ApiResponse.success(null, Constant.JOIN_SUCCESS_MESSAGE);
+        return ApiResponse.success(Constant.JOIN_SUCCESS_MESSAGE);
     }
 
     @PostMapping("/login")

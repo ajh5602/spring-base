@@ -17,26 +17,26 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(ApiException.class)
     public ResponseEntity<?> responseException(ApiException ex) {
-        return ApiResponse.failMessage(ex.getMessage());
+        return ApiResponse.fail(ex.getMessage());
     }
 
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
     public ResponseEntity<?> responseException(MethodArgumentTypeMismatchException ex) {
-        return ApiResponse.failMessage("VALIDATE_ERROR");
+        return ApiResponse.fail("VALIDATE_ERROR");
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<?> methodArgumentNotValidException(MethodArgumentNotValidException ex) {
         AtomicReference<String> errors = new AtomicReference<>("");
         ex.getBindingResult().getAllErrors().forEach(c -> errors.set(c.getDefaultMessage()));
-        return ApiResponse.failMessage("VALIDATE_ERROR : " + errors);
+        return ApiResponse.fail("VALIDATE_ERROR : " + errors);
     }
 
     @ExceptionHandler(BindException.class)
     public ResponseEntity<?> bindException(BindException ex) {
         AtomicReference<String> errors = new AtomicReference<>("");
         ex.getBindingResult().getAllErrors().forEach(c -> errors.set(c.getDefaultMessage()));
-        return ApiResponse.failMessage("VALIDATE_ERROR : " + errors);
+        return ApiResponse.fail("VALIDATE_ERROR : " + errors);
     }
 
     @ExceptionHandler(Exception.class)

@@ -30,19 +30,19 @@ public class MemberController {
     @PostMapping("/{memberId}/logout")
     public ApiResponse<String> logout(@PathVariable("memberId") Long memberId) {
         memberService.logout(memberId);
-        return ApiResponse.success(null, Constant.LOGOUT_SUCCESS_MESSAGE);
+        return ApiResponse.success(Constant.LOGOUT_SUCCESS_MESSAGE);
     }
 
     @PatchMapping("/{memberId}/dormant")
     public ApiResponse<String> dormant(@PathVariable("memberId") Long memberId) {
         memberService.dormant(memberId);
-        return ApiResponse.success(null, Constant.DORMANT_SUCCESS_MESSAGE);
+        return ApiResponse.success(Constant.DORMANT_SUCCESS_MESSAGE);
     }
 
     @PatchMapping("/{memberId}/withdraw")
     public ApiResponse<String> withdraw(@PathVariable("memberId") Long memberId) {
         memberService.withdraw(memberId);
-        return ApiResponse.success(null, Constant.WITHDRAW_SUCCESS_MESSAGE);
+        return ApiResponse.success(Constant.WITHDRAW_SUCCESS_MESSAGE);
     }
 
     @GetMapping("/{memberId}")
