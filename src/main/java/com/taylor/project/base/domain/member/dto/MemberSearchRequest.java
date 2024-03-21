@@ -1,5 +1,7 @@
 package com.taylor.project.base.domain.member.dto;
 
-public class MemberSearchRequest {
+public record MemberSearchRequest(
+
+) {
 
 }

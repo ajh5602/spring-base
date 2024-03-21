@@ -23,7 +23,6 @@ repositories {
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
-
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
@@ -39,6 +38,10 @@ dependencies {
     //swagger
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.2'
 
+    //mapstruct
+    implementation 'org.mapstruct:mapstruct:1.5.3.Final'
+    annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.3.Final'
+
     compileOnly 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     runtimeOnly 'com.h2database:h2'
@@ -49,26 +52,5 @@ dependencies {
 
 tasks.named('test') {
     useJUnitPlatform()
-}
-
-def querydslSrcDir = 'src/main/generated'
-sourceSets {
-    main {
-        java {
-            srcDirs += [querydslSrcDir]
-        }
-    }
-}
-
-compileJava {
-    options.compilerArgs << '-Aquerydsl.generatedAnnotationClass=javax.annotation.Generated'
-}
-
-tasks.withType(JavaCompile) {
-    options.generatedSourceOutputDirectory = file(querydslSrcDir)
-}
-
-clean {
-    delete file(querydslSrcDir)
 }
 

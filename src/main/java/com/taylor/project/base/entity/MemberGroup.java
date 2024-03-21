@@ -30,9 +30,11 @@ public class MemberGroup {
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
-    
+
     @Column(nullable = false)
     String name;
+
+    String desc;
 
     @Column(name = "created_at", nullable = false)
     @CreationTimestamp
@@ -46,7 +48,10 @@ public class MemberGroup {
     Boolean deletedYn;
 
     @Builder
-    public MemberGroup(String name) {
+    public MemberGroup(
+        String name,
+        String desc) {
         this.name = name;
+        this.desc = desc;
     }
 }
