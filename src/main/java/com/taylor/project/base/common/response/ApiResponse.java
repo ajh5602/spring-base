@@ -24,6 +24,10 @@ public class ApiResponse<T> {
         return ApiResponse.<T>builder().result(true).data(data).build();
     }
 
+    public static <T> ApiResponse<T> success(T data, String message) {
+        return ApiResponse.<T>builder().result(true).message(message).build();
+    }
+
     public static <T> ResponseEntity<ApiResponse<T>> fail(ApiExceptionCode code) {
         return ResponseEntity.status(200)
             .body(ApiResponse.<T>builder().result(false).message(code.getMessage()).build());
