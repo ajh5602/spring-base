@@ -1,5 +1,6 @@
 package com.taylor.project.base.domain.member.controller;
 
+import com.taylor.project.base.common.response.ApiPage;
 import com.taylor.project.base.common.response.ApiResponse;
 import com.taylor.project.base.domain.member.dto.MemberGroupRequest;
 import com.taylor.project.base.domain.member.dto.MemberGroupResponse;
@@ -16,13 +17,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/member/group")
+@RequestMapping("/members/groups")
 public class MemberGroupController {
 
     private final MemberGroupService memberGroupService;
 
     @GetMapping("/{name}")
-    public ApiResponse<List<MemberGroupResponse>> memberGroupByName(
+    public ApiResponse<ApiPage<List<MemberGroupResponse>>> memberGroupByName(
         @PathVariable("name") String name) {
         return ApiResponse.success(memberGroupService.getMemberGroupByName(name));
     }
