@@ -1,6 +1,7 @@
 package com.taylor.project.base.domain.member.service;
 
 import com.taylor.project.base.common.response.ApiPage;
+import com.taylor.project.base.common.response.ApiPageRequest;
 import com.taylor.project.base.domain.member.dto.MemberGroupRequest;
 import com.taylor.project.base.domain.member.dto.MemberGroupResponse;
 import java.util.List;
@@ -17,7 +18,8 @@ public class MemberGroupService {
         return null;
     }
 
-    public ApiPage<List<MemberGroupResponse>> getMemberGroupByName(String name) {
+    public ApiPage<List<MemberGroupResponse>> getMemberGroupByName(String name,
+        ApiPageRequest page) {
         return null;
     }
 
