@@ -1,4 +1,4 @@
-package com.taylor.project.base.domain.member.repository;
+package com.taylor.project.base.repository;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
@@ -10,5 +10,5 @@ public class MemberRepositoryCustomImpl implements MemberRepositoryCustom {
 
     private final JPAQueryFactory queryFactory;
 
-    
+
 }
