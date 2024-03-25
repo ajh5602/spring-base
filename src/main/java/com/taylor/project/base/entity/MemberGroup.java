@@ -5,6 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Index;
 import jakarta.persistence.Table;
 import java.time.LocalDateTime;
 import lombok.AccessLevel;
@@ -22,7 +23,9 @@ import org.hibernate.annotations.UpdateTimestamp;
 @DynamicInsert
 @DynamicUpdate
 @NoArgsConstructor
-@Table(name = "member_group")
+@Table(name = "member_group", indexes = {
+    @Index(name = "idx__name", columnList = "name"),
+})
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class MemberGroup {
 
@@ -31,7 +34,7 @@ public class MemberGroup {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     String name;
 
     String desc;

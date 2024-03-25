@@ -42,7 +42,7 @@ public class Member {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     String loginId;
 
     @Column(nullable = false)
@@ -51,9 +51,10 @@ public class Member {
     @Column(nullable = false)
     String name;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     String phone;
 
+    @Column(unique = true)
     String email;
 
     @Enumerated(EnumType.STRING)
