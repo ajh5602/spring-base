@@ -1,6 +1,7 @@
 package com.taylor.project.base.domain.member.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import java.time.LocalDateTime;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -17,5 +18,7 @@ public class MemberGroupResponse {
     String name;
 
     String desc;
+
+    LocalDateTime createdAt;
 
 }

@@ -4,9 +4,9 @@ import com.taylor.project.base.common.constant.Constant;
 import com.taylor.project.base.common.response.ApiPage;
 import com.taylor.project.base.common.response.ApiPageRequest;
 import com.taylor.project.base.common.response.ApiResponse;
-import com.taylor.project.base.domain.member.dto.MemberRequest;
 import com.taylor.project.base.domain.member.dto.MemberResponse;
 import com.taylor.project.base.domain.member.dto.MemberSearchRequest;
+import com.taylor.project.base.domain.member.dto.MemberUpdateRequest;
 import com.taylor.project.base.domain.member.service.MemberService;
 import jakarta.validation.Valid;
 import java.util.List;
@@ -57,7 +57,7 @@ public class MemberController {
     }
 
     @PutMapping
-    public ApiResponse<MemberResponse> update(@Valid @RequestBody MemberRequest request) {
+    public ApiResponse<MemberResponse> update(@Valid @RequestBody MemberUpdateRequest request) {
         return ApiResponse.success(memberService.update(request));
     }
 

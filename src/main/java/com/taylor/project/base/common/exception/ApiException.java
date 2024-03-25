@@ -8,7 +8,7 @@ import lombok.experimental.FieldDefaults;
 @Getter
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class ApiException extends Exception {
+public class ApiException extends RuntimeException {
 
     final String code;
     final String message;
