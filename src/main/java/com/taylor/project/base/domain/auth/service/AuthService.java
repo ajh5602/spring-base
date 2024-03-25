@@ -30,9 +30,11 @@ public class AuthService {
 
     @Transactional
     public void join(JoinRequest request) {
-        if (memberService.checkDuplicationMemberByJoinRequest(request)) {
-            throw new ApiException(ApiExceptionCode.DUPLICATION_MEMBER_JOIN);
+        if (memberService.checkDuplicationMember(request.loginId(), request.phone(),
+            request.email())) {
+            throw new ApiException(ApiExceptionCode.DUPLICATION_MEMBER);
         }
+
         MemberGroup memberGroup = memberGroupService.getMemberGroupById(request.memberGroupId());
         MemberDto member = MemberMapper.instance.toJoinResponse(request);
         member.setMemberGroup(memberGroup);

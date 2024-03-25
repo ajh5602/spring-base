@@ -17,7 +17,7 @@ public enum ApiExceptionCode {
     NOT_FOUND_LOGIN_ID("NOT_FOUND_LOGIN_ID", "회원 아이디를 찾을 수 없습니다."),
 
     //check duplication
-    DUPLICATION_MEMBER_JOIN("DUPLICATION_MEMBER_JOIN", "동일 회원이 가입되어있습니다."),
+    DUPLICATION_MEMBER("DUPLICATION_MEMBER_MEMBER", "동일 회원이 있습니다."),
     DUPLICATION_MEMBER_GROUP("DUPLICATION_MEMBER_GROUP", "이미 존재하는 그룹 명입니다."),
 
     //fail

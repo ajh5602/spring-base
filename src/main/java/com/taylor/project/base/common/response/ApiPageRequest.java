@@ -10,6 +10,7 @@ public record ApiPageRequest(
     @Min(value = 1, message = "1이하에 숫자는 입력할 수 없습니다.")
     Integer pageNumber,
     @NotNull(message = "페이지 사이즈는 필수 값입니다.")
+    @Min(value = 1, message = "1이하에 숫자는 입력할 수 없습니다.")
     Integer pageSize) {
 
     public PageRequest of() {

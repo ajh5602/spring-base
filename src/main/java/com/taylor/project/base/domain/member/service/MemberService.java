@@ -4,17 +4,20 @@ import com.taylor.project.base.common.exception.ApiException;
 import com.taylor.project.base.common.exception.ApiExceptionCode;
 import com.taylor.project.base.common.response.ApiPage;
 import com.taylor.project.base.common.response.ApiPageRequest;
-import com.taylor.project.base.domain.auth.dto.JoinRequest;
 import com.taylor.project.base.domain.member.dto.MemberDto;
 import com.taylor.project.base.domain.member.dto.MemberResponse;
 import com.taylor.project.base.domain.member.dto.MemberSearchRequest;
 import com.taylor.project.base.domain.member.dto.MemberUpdateRequest;
 import com.taylor.project.base.domain.member.mapper.MemberMapper;
 import com.taylor.project.base.entity.Member;
+import com.taylor.project.base.entity.MemberGroup;
+import com.taylor.project.base.repository.MemberGroupRepository;
 import com.taylor.project.base.repository.MemberRepository;
 import java.util.List;
+import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,6 +27,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class MemberService {
 
     private final MemberRepository memberRepository;
+    private final MemberGroupRepository memberGroupRepository;
 
     @Transactional
     public Member create(MemberDto memberDto) {
@@ -33,7 +37,24 @@ public class MemberService {
 
     @Transactional
     public MemberResponse update(MemberUpdateRequest request) {
-        return null;
+        Member member = getMemberById(request.memberId());
+
+        if (checkDuplicationMember(null, request.phone(), request.email())) {
+            throw new ApiException(ApiExceptionCode.DUPLICATION_MEMBER);
+        }
+
+        if (Objects.nonNull(request.memberGroupId())) {
+            MemberGroup memberGroup = memberGroupRepository.findById(request.memberGroupId())
+                .orElseThrow(() -> new ApiException(ApiExceptionCode.NOT_FOUND_MEMBER_GROUP));
+            member.setMemberGroup(memberGroup);
+        }
+
+        member.setPhone(request.phone());
+        member.setEmail(request.email());
+        member.setDevice(request.device());
+
+        memberRepository.save(member);
+        return MemberMapper.instance.toMemberResponse(member);
     }
 
     public void logout(Long memberId) {
@@ -58,7 +79,16 @@ public class MemberService {
     @Transactional(readOnly = true)
     public ApiPage<List<MemberResponse>> getMemberByMemberSearchRequest(MemberSearchRequest search,
         ApiPageRequest pageRequest) {
-        return null;
+        Page<Member> members = memberRepository.findByMemberSearchRequest(search, pageRequest.of());
+
+        List<MemberResponse> contents = members.getContent().stream()
+            .map(MemberMapper.instance::toMemberResponse)
+            .toList();
+
+        return ApiPage.<List<MemberResponse>>builder()
+            .content(contents)
+            .page(members)
+            .build();
     }
 
     @Transactional(readOnly = true)
@@ -76,13 +106,8 @@ public class MemberService {
             .orElseThrow(() -> new ApiException(ApiExceptionCode.NOT_FOUND_LOGIN_ID));
     }
 
-    public Boolean checkDuplicationMemberByJoinRequest(JoinRequest request) {
-        List<Member> member = memberRepository
-            .findByLoginIdOrPhoneOrEmail(request.loginId(), request.phone(), request.email())
-            .stream().filter((m) -> m.getWithdrawYn().equals(false))
-            .toList();
-
-        return !member.isEmpty();
+    public Boolean checkDuplicationMember(String loginId, String phone, String email) {
+        return !memberRepository.findDuplicationMember(loginId, phone, email).isEmpty();
     }
 
 }

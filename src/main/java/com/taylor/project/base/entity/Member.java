@@ -113,4 +113,20 @@ public class Member {
     public void setWithdrawDateTime() {
         this.withdrawDateTime = LocalDateTime.now();
     }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setDevice(Device device) {
+        this.device = device;
+    }
+
+    public void setMemberGroup(MemberGroup memberGroup) {
+        this.memberGroup = memberGroup;
+    }
 }

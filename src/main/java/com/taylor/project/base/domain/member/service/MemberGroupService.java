@@ -10,6 +10,7 @@ import com.taylor.project.base.domain.member.mapper.MemberGroupMapper;
 import com.taylor.project.base.entity.Member;
 import com.taylor.project.base.entity.MemberGroup;
 import com.taylor.project.base.repository.MemberGroupRepository;
+import com.taylor.project.base.repository.MemberRepository;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,8 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class MemberGroupService {
 
-    private final MemberService memberService;
-
+    private final MemberRepository memberRepository;
     private final MemberGroupRepository memberGroupRepository;
 
     @Transactional
@@ -50,22 +50,23 @@ public class MemberGroupService {
         Page<MemberGroup> memberGroups = memberGroupRepository
             .findByNameLikeAndDeletedYn(name, false, page.of());
 
-        List<MemberGroupResponse> responses = memberGroups.getContent().stream()
+        List<MemberGroupResponse> contents = memberGroups.getContent().stream()
             .map(MemberGroupMapper.instance::toMemberGroupResponse)
             .toList();
 
         return ApiPage.<List<MemberGroupResponse>>builder()
-            .content(responses)
+            .content(contents)
             .page(memberGroups)
             .build();
     }
 
     @Transactional(readOnly = true)
     public MemberGroupResponse getMemberGroupByMemberId(Long memberId) {
-        Member member = memberService.getMemberById(memberId);
+        Member member = memberRepository.findById(memberId)
+            .orElseThrow(() -> new ApiException(ApiExceptionCode.NOT_FOUND_MEMBER));
         return MemberGroupMapper.instance.toMemberGroupResponse(member.getMemberGroup());
     }
-    
+
     private Boolean checkDuplicationMemberGroupByName(String name) {
         return !memberGroupRepository.findByNameAndDeletedYnFalse(name).isEmpty();
     }
