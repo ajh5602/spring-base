@@ -1,6 +1,7 @@
 package com.taylor.project.base.common.response;
 
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -14,6 +15,7 @@ public class ApiPage<V> {
     final V content;
     final ApiPageable pageable;
 
+    @Builder
     public ApiPage(V content, Page<?> page) {
         this.content = content;
         this.pageable = ApiPageable.builder()

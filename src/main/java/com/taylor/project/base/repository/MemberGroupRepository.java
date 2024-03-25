@@ -7,6 +7,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface MemberGroupRepository extends JpaRepository<MemberGroup, Long> {
 
-    Page<MemberGroup> findByNameLike(String name, Pageable pageable);
+    Page<MemberGroup> findByNameLikeAndDeletedYn(String name, Boolean isDeleted, Pageable pageable);
 
 }

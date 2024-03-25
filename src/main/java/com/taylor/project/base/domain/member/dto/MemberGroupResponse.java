@@ -14,4 +14,8 @@ public class MemberGroupResponse {
 
     Long id;
 
+    String name;
+
+    String desc;
+
 }
