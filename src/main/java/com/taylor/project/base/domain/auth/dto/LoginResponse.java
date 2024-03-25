@@ -14,4 +14,16 @@ public class LoginResponse {
 
     Long id;
 
+    String name;
+
+    String email;
+
+    String phone;
+
+    Long memberGroupId;
+
+    String memberGroupName;
+
+    String token;
+
 }

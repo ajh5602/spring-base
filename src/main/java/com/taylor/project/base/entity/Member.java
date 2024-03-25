@@ -43,13 +43,13 @@ public class Member {
     Long id;
 
     @Column(nullable = false)
-    String name;
-
-    @Column(nullable = false)
     String loginId;
 
     @Column(nullable = false)
     String loginPassword;
+
+    @Column(nullable = false)
+    String name;
 
     @Column(nullable = false)
     String phone;
@@ -85,16 +85,16 @@ public class Member {
 
     @Builder
     public Member(
-        String name,
         String loginId,
         String loginPassword,
+        String name,
         String phone,
         String email,
         Device device,
         MemberGroup memberGroup) {
-        this.name = name;
         this.loginId = loginId;
         this.loginPassword = loginPassword;
+        this.name = name;
         this.phone = phone;
         this.email = email;
         this.device = device;
