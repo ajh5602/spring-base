@@ -47,7 +47,7 @@ public class MemberController {
 
     @GetMapping("/{memberId}")
     public ApiResponse<MemberResponse> memberByMemberId(@PathVariable("memberId") Long memberId) {
-        return ApiResponse.success(memberService.getMemberByMemberId(memberId));
+        return ApiResponse.success(memberService.getMemberResponseById(memberId));
     }
 
     @GetMapping

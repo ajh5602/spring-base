@@ -1,6 +1,7 @@
 package com.taylor.project.base.domain.member.mapper;
 
 import com.taylor.project.base.domain.auth.dto.JoinRequest;
+import com.taylor.project.base.domain.auth.dto.LoginResponse;
 import com.taylor.project.base.domain.member.dto.MemberDto;
 import com.taylor.project.base.domain.member.dto.MemberResponse;
 import com.taylor.project.base.entity.Member;
@@ -19,4 +20,7 @@ public interface MemberMapper {
     MemberDto toJoinResponse(JoinRequest joinRequest);
 
     Member toMember(MemberDto memberDto);
+
+    @Mapping(target = "token", ignore = true)
+    LoginResponse toMember(Member member);
 }

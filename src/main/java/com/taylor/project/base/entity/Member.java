@@ -101,4 +101,16 @@ public class Member {
         this.device = device;
         this.memberGroup = memberGroup;
     }
+
+    public void setDormantYn(Boolean dormantYn) {
+        this.dormantYn = dormantYn;
+    }
+
+    public void setWithdrawYn(Boolean withdrawYn) {
+        this.withdrawYn = withdrawYn;
+    }
+
+    public void setWithdrawDateTime() {
+        this.withdrawDateTime = LocalDateTime.now();
+    }
 }

@@ -25,4 +25,8 @@ public class MemberDto {
     public void setMemberGroup(MemberGroup memberGroup) {
         this.memberGroup = memberGroup;
     }
+
+    public void encodePassword(String encodePassword) {
+        this.loginPassword = encodePassword;
+    }
 }

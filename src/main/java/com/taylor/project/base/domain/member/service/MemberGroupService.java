@@ -7,6 +7,7 @@ import com.taylor.project.base.common.response.ApiPageRequest;
 import com.taylor.project.base.domain.member.dto.MemberGroupRequest;
 import com.taylor.project.base.domain.member.dto.MemberGroupResponse;
 import com.taylor.project.base.domain.member.mapper.MemberGroupMapper;
+import com.taylor.project.base.entity.Member;
 import com.taylor.project.base.entity.MemberGroup;
 import com.taylor.project.base.repository.MemberGroupRepository;
 import java.util.List;
@@ -21,13 +22,11 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class MemberGroupService {
 
+    private final MemberService memberService;
+
     private final MemberGroupRepository memberGroupRepository;
 
-    public MemberGroup getMemberGroupById(Long memberGroupId) {
-        return memberGroupRepository.findById(memberGroupId)
-            .orElseThrow(() -> new ApiException(ApiExceptionCode.NOT_FOUND_MEMBER_GROUP));
-    }
-
+    @Transactional
     public MemberGroupResponse create(MemberGroupRequest request) {
         if (checkDuplicationMemberGroupByName(request.name())) {
             throw new ApiException(ApiExceptionCode.DUPLICATION_MEMBER_GROUP);
@@ -35,14 +34,21 @@ public class MemberGroupService {
 
         MemberGroup memberGroup = MemberGroupMapper.instance.toMemberGroupRequest(request);
         MemberGroup member = memberGroupRepository.save(memberGroup);
+
         return MemberGroupMapper.instance.toMemberGroupResponse(member);
+    }
+
+    @Transactional(readOnly = true)
+    public MemberGroup getMemberGroupById(Long memberGroupId) {
+        return memberGroupRepository.findById(memberGroupId)
+            .orElseThrow(() -> new ApiException(ApiExceptionCode.NOT_FOUND_MEMBER_GROUP));
     }
 
     @Transactional(readOnly = true)
     public ApiPage<List<MemberGroupResponse>> getMemberGroupByName(String name,
         ApiPageRequest page) {
-        Page<MemberGroup> memberGroups = memberGroupRepository.findByNameLikeAndDeletedYn(name,
-            false, page.of());
+        Page<MemberGroup> memberGroups = memberGroupRepository
+            .findByNameLikeAndDeletedYn(name, false, page.of());
 
         List<MemberGroupResponse> responses = memberGroups.getContent().stream()
             .map(MemberGroupMapper.instance::toMemberGroupResponse)
@@ -54,11 +60,13 @@ public class MemberGroupService {
             .build();
     }
 
+    @Transactional(readOnly = true)
     public MemberGroupResponse getMemberGroupByMemberId(Long memberId) {
-        return null;
+        Member member = memberService.getMemberById(memberId);
+        return MemberGroupMapper.instance.toMemberGroupResponse(member.getMemberGroup());
     }
-
-    public Boolean checkDuplicationMemberGroupByName(String name) {
+    
+    private Boolean checkDuplicationMemberGroupByName(String name) {
         return !memberGroupRepository.findByNameAndDeletedYnFalse(name).isEmpty();
     }
 

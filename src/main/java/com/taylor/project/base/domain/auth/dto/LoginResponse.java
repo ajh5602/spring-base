@@ -20,10 +20,10 @@ public class LoginResponse {
 
     String phone;
 
-    Long memberGroupId;
-
-    String memberGroupName;
-
     String token;
+
+    public void setToken(String token) {
+        this.token = token;
+    }
 
 }
