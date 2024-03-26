@@ -58,7 +58,6 @@ public class Member {
     String email;
 
     @Enumerated(EnumType.STRING)
-    @ColumnDefault("'none'")
     Device device;
 
     @ManyToOne(fetch = FetchType.LAZY)
