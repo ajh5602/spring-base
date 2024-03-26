@@ -39,7 +39,7 @@ public class MemberService {
     public MemberResponse update(MemberUpdateRequest request) {
         Member member = getMemberById(request.memberId());
 
-        if (checkDuplicationMember(null, request.phone(), request.email())) {
+        if (isDuplicationMember(null, request.phone(), request.email())) {
             throw new ApiException(ApiExceptionCode.DUPLICATION_MEMBER);
         }
 
@@ -106,7 +106,7 @@ public class MemberService {
             .orElseThrow(() -> new ApiException(ApiExceptionCode.NOT_FOUND_LOGIN_ID));
     }
 
-    public Boolean checkDuplicationMember(String loginId, String phone, String email) {
+    public Boolean isDuplicationMember(String loginId, String phone, String email) {
         return !memberRepository.findDuplicationMember(loginId, phone, email).isEmpty();
     }
 

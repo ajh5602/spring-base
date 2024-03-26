@@ -28,7 +28,7 @@ public class MemberGroupService {
 
     @Transactional
     public MemberGroupResponse create(MemberGroupRequest request) {
-        if (checkDuplicationMemberGroupByName(request.name())) {
+        if (isDuplicationMemberGroup(request.name())) {
             throw new ApiException(ApiExceptionCode.DUPLICATION_MEMBER_GROUP);
         }
 
@@ -67,7 +67,7 @@ public class MemberGroupService {
         return MemberGroupMapper.instance.toMemberGroupResponse(member.getMemberGroup());
     }
 
-    private Boolean checkDuplicationMemberGroupByName(String name) {
+    private Boolean isDuplicationMemberGroup(String name) {
         return !memberGroupRepository.findByNameAndDeletedYnFalse(name).isEmpty();
     }
 

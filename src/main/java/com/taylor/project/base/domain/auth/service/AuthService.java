@@ -30,7 +30,7 @@ public class AuthService {
 
     @Transactional
     public void join(JoinRequest request) {
-        if (memberService.checkDuplicationMember(request.loginId(), request.phone(),
+        if (memberService.isDuplicationMember(request.loginId(), request.phone(),
             request.email())) {
             throw new ApiException(ApiExceptionCode.DUPLICATION_MEMBER);
         }
